@@ -1,0 +1,40 @@
+<div class="container">
+  <form class="form-inline">
+    <div class="form-group">
+      <label for="email">Email address:</label>
+      <input type="email" class="form-control" id="email">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+    <p-accordion [multiple]="true">
+      <p-accordionTab header="Names">
+          Content 1
+      </p-accordionTab>
+      <p-accordionTab header="Addresses">
+          Content 2
+      </p-accordionTab>
+      <p-accordionTab header="Emails">
+          Content 3    
+      </p-accordionTab>
+    </p-accordion>
+    </div>
+    <div class="col-sm-6">
+      <p-accordion [multiple]="true">
+        <p-accordionTab header="Phones">
+            Content 1
+        </p-accordionTab>
+        <p-accordionTab header="Jobs">
+            Content 2
+        </p-accordionTab>
+        <p-accordionTab header="Educations">
+            Content 3    
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+  </div>
+</div>
