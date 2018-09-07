@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { EmailReport } from './../../model/email-report'
+import {  EmailReport, 
+          Name, 
+          Email, 
+          Image, 
+          Social, 
+          Education,
+          Job } from './../../model/email-report'
 import { EmailReportService } from '../../service/email-report.service';
 import { AccordionModule } from 'primeng/accordion';
+import { OrderListModule } from 'primeng/orderlist';
+import {DataViewModule} from 'primeng/dataview';
 
 @Component({
   selector: 'app-report',
@@ -11,19 +19,34 @@ import { AccordionModule } from 'primeng/accordion';
 export class ReportComponent implements OnInit {
 
   emailReport: EmailReport;
+  names: Name[];
+  emails: Email[];
+  images: Image[];
+  socials: Social[];
+  jobs: Job[];
+  educations: Education[];
+  text:string;
 
   constructor(private emailReportService: EmailReportService) { }
 
   ngOnInit() {
-    // this.emailReportService.getEmailReport('skip.suva@gmail.com').subscribe(emailReport => {
-    //   this.emailReport = emailReport;
-    // })
   }
 
-  onSubmit() { 
-    this.emailReportService.getEmailReport('skip.suva@gmail.com').subscribe(emailReport => {
-      this.emailReport = emailReport;
+  onClickSubmit(data) {
+    this.emailReportService.getEmailReport(data.email)
+    .subscribe(emailReport => {
+      this.loadInfo(emailReport);
     })
-   }
+  }
+
+  loadInfo(emailReport: EmailReport) {
+    this.emailReport=emailReport;
+    this.names=emailReport.names;
+    this.emails=emailReport.emails;
+    this.images=emailReport.images;
+    this.socials=emailReport.social;
+    this.jobs=emailReport.jobs;
+    this.educations=emailReport.educations;
+  }
 
 }

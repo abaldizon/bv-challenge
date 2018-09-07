@@ -6,7 +6,9 @@ import { ReportComponent } from './components/report/report.component';
 import { HttpModule }    from '@angular/http';
 import { AccordionModule } from 'primeng/accordion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { OrderListModule } from 'primeng/orderlist';
+import {DataViewModule} from 'primeng/dataview';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { FormsModule } from '@angular/forms'
     BrowserModule,
     HttpModule,
     AccordionModule,
+    OrderListModule,
+    DataViewModule,
     BrowserAnimationsModule,
     FormsModule
   ],

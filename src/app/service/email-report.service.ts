@@ -16,10 +16,10 @@ export class EmailReportService {
 
   constructor(private http: Http) {}
 
-  getEmailReport(email): Observable<EmailReport> {
+  getEmailReport(email): Observable<any> {
     return this.http.get(this.baseUrl + email).pipe(
       map(response => {
-        return <EmailReport>response.json();
+        return response.json();
       }, catchError(this.handleError))
     );
   }
