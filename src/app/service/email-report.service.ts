@@ -17,7 +17,7 @@ export class EmailReportService {
   constructor(private http: Http) {}
 
   getEmailReport(email): Observable<any> {
-    return this.http.get(this.baseUrl + email).pipe(
+    return this.http.get(this.baseUrl + email+'&exporttype=jsonp').pipe(
       map(response => {
         return response.json();
       }, catchError(this.handleError))
