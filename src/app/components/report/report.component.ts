@@ -27,19 +27,38 @@ export class ReportComponent implements OnInit {
   educations: Education[];
   text:string;
 
+  isLog:boolean = false;
+  userInvalid = false;
+  email: string = '';
+
   constructor(private emailReportService: EmailReportService) { }
 
   ngOnInit() {
+    this.isLog = false;
+    this.email = '';
   }
 
-  onClickSubmit(data) {
-    this.emailReportService.getEmailReport(data.email)
+  logIn(data) {
+    if (!this.isLog) {
+      this.isLog=this.emailReportService
+      .login(data.email,data.psw);
+      this.email=data.email;
+      this.isLog?this.onClickSubmit(data.email):this.userInvalid=false;
+    }
+    else {
+      this.isLog=false;
+      this.emailReport= null;
+    }
+  }
+
+  onClickSubmit(email) {
+    this.emailReportService.getEmailReport(email)
     .subscribe(emailReport => {
       this.loadInfo(emailReport);
     })
   }
 
-  loadInfo(emailReport: EmailReport) {
+  loadInfo(emailReport) {
     this.emailReport=emailReport;
     this.names=emailReport.names;
     this.emails=emailReport.emails;

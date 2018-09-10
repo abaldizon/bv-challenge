@@ -1,6 +1,14 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import url('https://fonts.googleapis.com/css?family=Muli');
 
+button:focus {
+    outline: 0;
+}
+
+.navbar .dropdown-menu .form-control {
+    width: 200px;
+}
+
 .container {
     padding: 20px 0px;
     
@@ -13,6 +21,13 @@
     }
 
     .ui-accordion-header {
-        text-align: left;
+        text-align: left !important;
+    }
+
+    .ui-g {
+        img {
+            width: 100%;
+            height: auto;
+        }
     }
 }

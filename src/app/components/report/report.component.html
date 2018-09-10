@@ -1,131 +1,139 @@
-<div class="container">
-  <form class="form-inline" #searchEmail = "ngForm" (ngSubmit) = "onClickSubmit(searchEmail.value)">
-    <div class="form-group">
-      <label for="email">Email address:</label>
-      <input type="text" class="form-control" name="email" ngModel>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand">BV-API-Challenge</a>
+  <form class="form-inline" #searchEmail = "ngForm" (ngSubmit) = "logIn(searchEmail.value)">
+    <div *ngIf=!isLog>
+    <input type="text" class="form-control mr-sm-2" placeholder="Email" name="email" ngModel>
+    <input type="password" class="form-control mr-sm-2" placeholder="Enter Password" name="psw" ngModel>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <div *ngIf=isLog>
+      <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">LogOut</button>
+    </div>
   </form>
-</div>
+</nav>
 
-<div class="container" *ngIf=!emailReport>
-  <h3>
-    Please enter an email to see a report!
-  </h3>
-</div>
 
-<div class="container" *ngIf=emailReport>
-  <div class="row">
-    <div class="col-sm-6">
-    <p-accordion [multiple]="true">
-      <p-accordionTab *ngIf=names header="Names">
-        <p-dataView #dv [value]="names" [paginator]="false" [rows]="5" paginatorPosition="false">
-          <ng-template let-name pTemplate="listItem">
-              <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-                <div class="ui-g-12 ui-md-8 ">
-                    <div class="ui-g">
-                        <div class="ui-g-2 ui-sm-6">Name: </div>
-                        <div class="ui-g-10 ui-sm-6"><b>{{name.full}}</b></div>
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1 *ngIf=isLog>
+    Welcome {{email}}!!
+  </h1>
+  <h1 *ngIf=!isLog>
+    Please Log In!
+  </h1>
+  <div class="container" *ngIf=emailReport>
+    <div class="row">
+      <div>
+        <p-accordion [multiple]="true">
+
+          <p-accordionTab header="Names">
+            <p-dataView #dv [value]="names" [paginator]="false" [rows]="5" paginatorPosition="false">
+              <ng-template let-name pTemplate="listItem">
+                  <div class="ui-g" style="border-bottom: 1px solid #d9d9d9">
+                    <div class="ui-g-12 ui-md-8 ">
+                        <div class="ui-g">
+                            <b>{{name.full}}</b>
+                        </div>
                     </div>
-                </div>
-              </div>
-          </ng-template>
-        </p-dataView>
-      </p-accordionTab>
+                  </div>
+              </ng-template>
+            </p-dataView>
+          </p-accordionTab>
 
-      <p-accordionTab *ngIf=emails header="Emails">
-        <p-dataView #dv [value]="emails" [paginator]="false" [rows]="5" paginatorPosition="false">
-          <ng-template let-email pTemplate="listItem">
-              <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-                  <div class="ui-g-12 ui-md-8 ">
-                      <div class="ui-g">
-                          <div class="ui-g-2 ui-sm-6">Email: </div>
-                          <div class="ui-g-10 ui-sm-6"><b>{{email.email_address}}</b></div>
+          <p-accordionTab header="Emails">
+            <p-dataView #dv [value]="emails" [paginator]="false" [rows]="5" paginatorPosition="false">
+              <ng-template let-email pTemplate="listItem">
+                  <div class="ui-g" style="border-bottom: 1px solid #d9d9d9">
+                      <div class="ui-g-12 ui-md-8 ">
+                          <div class="ui-g">
+                              <b>{{email.email_address}}</b>
+                          </div>
                       </div>
                   </div>
-              </div>
-          </ng-template>
-        </p-dataView>
-      </p-accordionTab>
-      
-      <p-accordionTab *ngIf=images header="Images">
-        <p-dataView #dv [value]="images" [paginator]="false" [rows]="5" paginatorPosition="false">
-          <ng-template let-image pTemplate="listItem">
-              <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-                  <div class="ui-g-12 ui-md-3" style="text-align:center">
-                      <img src="{{image.url}}">
+              </ng-template>
+            </p-dataView>
+          </p-accordionTab>
+          
+          <p-accordionTab header="Images">
+            <p-dataView #dv [value]="images" [paginator]="false" [rows]="5" paginatorPosition="false">
+              <ng-template let-image pTemplate="listItem">
+                  <div class="ui-g" style="border-bottom: 1px solid #d9d9d9">
+                      <div class="ui-g-12 ui-md-3" style="text-align:center">
+                          <img src="{{image.url}}">
+                      </div>
                   </div>
-              </div>
-          </ng-template>
-        </p-dataView>
-      </p-accordionTab>
-    </p-accordion>
-    </div>
-    <div class="col-sm-6">
-      <p-accordion [multiple]="true">
-        <p-accordionTab *ngIf=socials header="Social Networks">
-          <p-dataView #dv [value]="socials" [paginator]="false" [rows]="5" paginatorPosition="false">
-            <ng-template let-social pTemplate="listItem">
-              <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-                <div class="ui-g-12 ui-md-8">
-                  <div class="ui-g">
-                    <div class="ui-g-4 ui-sm-6">Domain: </div>
-                    <div class="ui-g-8 ui-sm-6"><b>{{social.domain}}</b></div>
-                  </div>
-                  <div class="ui-g">
-                    <div class="ui-g-4 ui-sm-6">Social Network: </div>
-                    <div class="ui-g-8 ui-sm-6"><b>{{social.type}}</b></div>
-                  </div>
-                  <div class="ui-g">
-                    <div class="ui-g-4 ui-sm-6">Url: </div>
-                    <div class="ui-g-8 ui-sm-6"><b>{{social.url}}</b></div>
+              </ng-template>
+            </p-dataView>
+          </p-accordionTab>
+
+          <p-accordionTab header="Social Networks">
+            <p-dataView #dv [value]="socials" [paginator]="false" [rows]="5" paginatorPosition="false">
+              <ng-template let-social pTemplate="listItem">
+                <div class="ui-g" style="border-bottom: 1px solid #d9d9d9">
+                  <div class="ui-g-12">
+                    <div class="ui-g">
+                      <div class="ui-g-4">Domain: </div>
+                      <div class="ui-g-8"><b>{{social.domain}}</b></div>
+                    </div>
+                    <div class="ui-g">
+                      <div class="ui-g-4">Social Network: </div>
+                      <div class="ui-g-8"><b>{{social.type}}</b></div>
+                    </div>
+                    <div class="ui-g">
+                      <div class="ui-g-4">Url: </div>
+                      <div class="ui-g-8"><b>{{social.url}}</b></div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </ng-template>
-          </p-dataView>
-        </p-accordionTab>
-        <p-accordionTab *ngIf=jobs header="Jobs">
-          <p-dataView #dv [value]="jobs" [paginator]="false" [rows]="5" paginatorPosition="false">
-            <ng-template let-job pTemplate="listItem">
-              <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-                <div class="ui-g-12 ui-md-8">
-                  <div class="ui-g">
-                    <div class="ui-g-4 ui-sm-6">Company: </div>
-                    <div class="ui-g-8 ui-sm-6"><b>{{job.company}}</b></div>
-                  </div>
-                  <div class="ui-g">
-                    <div class="ui-g-4 ui-sm-6">Job Title: </div>
-                    <div class="ui-g-8 ui-sm-6"><b>{{job.title}}</b></div>
-                  </div>
-                  <div class="ui-g">
-                    <div class="ui-g-4 ui-sm-6">Industry: </div>
-                    <div class="ui-g-8 ui-sm-6"><b>{{job.industry}}</b></div>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-          </p-dataView>
-        </p-accordionTab>
-        <p-accordionTab *ngIf=educations header="Educations">
-          <p-dataView #dv [value]="educations" [paginator]="false" [rows]="5" paginatorPosition="false">
-            <ng-template let-education pTemplate="listItem">
-              <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
-                <div class="ui-g-12 ui-md-8">
-                  <div class="ui-g">
-                    <div class="ui-g-4 ui-sm-6">School: </div>
-                    <div class="ui-g-8 ui-sm-6"><b>{{education.school}}</b></div>
-                  </div>
-                  <div class="ui-g">
-                    <div class="ui-g-4 ui-sm-6">Degree: </div>
-                    <div class="ui-g-8 ui-sm-6"><b>{{education.degree}}</b></div>
+              </ng-template>
+            </p-dataView>
+          </p-accordionTab>
+
+          <p-accordionTab header="Jobs">
+            <p-dataView #dv [value]="jobs" [paginator]="false" [rows]="5" paginatorPosition="false">
+              <ng-template let-job pTemplate="listItem">
+                <div class="ui-g" style="border-bottom: 1px solid #d9d9d9">
+                  <div class="ui-g-12 ui-md-8">
+                    <div class="ui-g">
+                      <div class="ui-g-4">Company: </div>
+                      <div class="ui-g-8"><b>{{job.company}}</b></div>
+                    </div>
+                    <div class="ui-g">
+                      <div class="ui-g-4">Job Title: </div>
+                      <div class="ui-g-8"><b>{{job.title}}</b></div>
+                    </div>
+                    <div class="ui-g">
+                      <div class="ui-g-4">Industry: </div>
+                      <div class="ui-g-8"><b>{{job.industry}}</b></div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </ng-template>
-          </p-dataView>  
-        </p-accordionTab>
-      </p-accordion>
+              </ng-template>
+            </p-dataView>
+          </p-accordionTab>
+
+          <p-accordionTab header="Educations">
+            <p-dataView #dv [value]="educations" [paginator]="false" [rows]="5" paginatorPosition="false">
+              <ng-template let-education pTemplate="listItem">
+                <div class="ui-g" style="border-bottom: 1px solid #d9d9d9">
+                  <div class="ui-g-12 ui-md-8">
+                    <div class="ui-g">
+                      <div class="ui-g-4">School: </div>
+                      <div class="ui-g-8"><b>{{education.school}}</b></div>
+                    </div>
+                    <div class="ui-g">
+                      <div class="ui-g-4">Degree: </div>
+                      <div class="ui-g-8"><b>{{education.degree}}</b></div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </p-dataView>  
+          </p-accordionTab>
+
+        </p-accordion>
+      </div>
     </div>
   </div>
+
 </div>
